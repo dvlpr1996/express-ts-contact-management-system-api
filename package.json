@@ -1,0 +1,69 @@
+{
+  "name": "express-ts-contact-management-system-api",
+  "version": "0.1.0",
+  "main": "./src/app.ts",
+  "description": "express ts contact management system api built with express.js and type script",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvlpr1996/express-ts-contact-management-system-api"
+  },
+  "keywords": [
+    "password",
+    "contact-management",
+    "express.js",
+    "javascript",
+    "typescript",
+    "rest-api"
+  ],
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Nima Jahan Bakhshian",
+      "email": "nimajahanbakhshian@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/dvlpr1996/express-ts-contact-management-system-api/issues",
+    "source": "https://github.com/dvlpr1996/express-ts-contact-management-system-api"
+  },
+  "homepage": "https://github.com/dvlpr1996/express-ts-contact-management-system-api",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "body-parser": "^1.20.3",
+    "compression": "^1.7.5",
+    "connect-timeout": "^1.9.0",
+    "crypto-js": "^4.2.0",
+    "eslint": "^9.15.0",
+    "express-async-handler": "^1.2.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.4.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "hpp": "^0.2.3",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.4",
+    "passport": "^0.7.0",
+    "passport-jwt-cookiecombo": "^1.0.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.5",
+    "@types/connect-timeout": "^0.0.39",
+    "@types/crypto-js": "^4.2.2",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "eslint-config-prettier": "^9.1.0",
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "dev": "nodemon --watch src --exec ts-node server.ts"
+  }
+}
