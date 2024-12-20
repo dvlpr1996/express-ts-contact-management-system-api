@@ -5,10 +5,12 @@ import compression from 'compression';
 import helmet from 'helmet';
 import notFoundErrorHandlingMiddleware from './middlewares/notFoundErrorHandlingMiddleware';
 import globalErrorHandlingMiddleware from './middlewares/globalErrorHandlingMiddleware';
+import checkEnvVarsMiddleware from './middlewares/checkEnvVarsMiddleware';
 
 const app: Application = express();
 
-// todo :: env mw
+app.use(checkEnvVarsMiddleware);
+
 app.use(timeout('20s'));
 app.use((req: Request, _res: Response, next: NextFunction) => {
   if (!req.timedout) next();
