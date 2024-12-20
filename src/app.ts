@@ -3,13 +3,11 @@ import bodyParser from 'body-parser';
 import timeout from 'connect-timeout';
 import compression from 'compression';
 import helmet from 'helmet';
-import mongoConnection from './boot/mongoConnection';
+import notFoundErrorHandlingMiddleware from './middlewares/notFoundErrorHandlingMiddleware';
 
 const app: Application = express();
 
 // todo :: env mw
-// todo :: see faker package in the package.json
-
 app.use(timeout('20s'));
 app.use((req: Request, _res: Response, next: NextFunction) => {
   if (!req.timedout) next();
@@ -43,7 +41,7 @@ app.all('*', (req: Request, _res: Response, _next: NextFunction) => {
   throw new Error(`The Route '${req.originalUrl}' Does Not Exists`);
 });
 
-// app.use(notFoundErrorHandling);
+app.use(notFoundErrorHandlingMiddleware);
 // app.use(globalErrorHandling);
 
 export default app;
