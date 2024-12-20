@@ -4,6 +4,7 @@ import timeout from 'connect-timeout';
 import compression from 'compression';
 import helmet from 'helmet';
 import notFoundErrorHandlingMiddleware from './middlewares/notFoundErrorHandlingMiddleware';
+import globalErrorHandlingMiddleware from './middlewares/globalErrorHandlingMiddleware';
 
 const app: Application = express();
 
@@ -35,13 +36,11 @@ app.use(
   })
 );
 
-// app.use(rateLimitConfig);
-
 app.all('*', (req: Request, _res: Response, _next: NextFunction) => {
   throw new Error(`The Route '${req.originalUrl}' Does Not Exists`);
 });
 
 app.use(notFoundErrorHandlingMiddleware);
-// app.use(globalErrorHandling);
+app.use(globalErrorHandlingMiddleware);
 
 export default app;
