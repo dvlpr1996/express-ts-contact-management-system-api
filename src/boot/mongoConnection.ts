@@ -1,33 +1,31 @@
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
-const MONGO_DB_URL = process.env.MONGO_DB_URL;
-
-mongoose.connection.on('error', (_error) => {
-  throw new Error('MongoDB connection failed');
+const MONGO_DB_COLLECTION_URL = process.env.MONGO_DB_URL;
+mongoose.connection.on('error', (error) => {
+  console.error('MongoDB connection error:', error.message);
+  process.exit(1);
 });
 
-const connectOptions = {
-  // useUnifiedTopology: true,
-  // dbName: process.env.DB_NAME,
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-  // useFindAndModify: false,
-  // useCreateIndex: true,
-  // useUnifiedTopology: true,
-  // useNewUrlParser: true,
+const connectOptions: mongoose.ConnectOptions = {
+  dbName: 'contact-management-system',
+  connectTimeoutMS: 30000,
 };
 
 const mongoConnection = async () => {
-  if (mongoose.connection.readyState === 1) return;
+  if (mongoose.connection.readyState !== 0 && mongoose.connection.readyState !== 3) {
+    return;
+  }
 
   try {
-    if (!MONGO_DB_URL) {
-      throw new Error('[MONGO_DB_URL] is missing in environment variables. Please add it to the .env file.');
+    if (!MONGO_DB_COLLECTION_URL) {
+      throw new Error('MONGO_DB_URL env var is missing in environment variables.');
     }
 
-    await mongoose.connect(MONGO_DB_URL, connectOptions);
+    await mongoose.connect(MONGO_DB_COLLECTION_URL, connectOptions);
 
     if (process.env.NODE_ENV === 'development') {
+      mongoose.set('debug', true);
       mongoose.connection.on('connected', () => console.log('MongoDB connected successfully'));
       mongoose.connection.on('disconnected', () => console.log('MongoDB disconnected'));
       mongoose.connection.on('reconnected', () => console.log('MongoDB reconnected'));
@@ -37,17 +35,15 @@ const mongoConnection = async () => {
   } catch (error) {
     if (error instanceof Error) {
       let errorMessage = 'An unexpected error occurred while connecting to MongoDB.';
-
       if (error.name === 'MongoNetworkError') {
         errorMessage = 'Network error occurred. Check your MongoDB server.';
-      }
-
-      if (error.name === 'MongooseServerSelectionError') {
+      } else if (error.name === 'MongooseServerSelectionError') {
         errorMessage = 'Server selection error. Ensure MongoDB is running and accessible.';
       }
 
-      throw new Error(`errorMessage, [{ stack: ${error.stack} }]`);
+      console.error(`${errorMessage}, [{ stack: ${error.stack} }]`);
     }
+    process.exit(1);
   }
 };
 

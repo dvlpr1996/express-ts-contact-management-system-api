@@ -29,12 +29,14 @@
   },
   "homepage": "https://github.com/dvlpr1996/express-ts-contact-management-system-api",
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
     "body-parser": "^1.20.3",
     "compression": "^1.7.5",
     "connect-timeout": "^1.9.0",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.7",
     "eslint": "^9.15.0",
     "express-async-handler": "^1.2.0",
     "express-mongo-sanitize": "^2.2.0",
@@ -64,6 +66,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc",
-    "dev": "nodemon --watch src --exec ts-node server.ts"
+    "dev": "nodemon --watch src --exec ts-node server.ts",
+    "faker": "ts-node ./src/models/faker/faker.ts"
   }
 }
