@@ -13,6 +13,7 @@ const requiredEnvVars = [
   'RATE_LIMIT_WINDOW_MS',
   'RATE_LIMIT_MAX_REQUESTS',
   'COOKIE_PARSER_SECRET_KEY',
+  'PASSPORT_JWT_COOKIE_NAME',
 ];
 
 const checkEnvVarsMiddleware = (_req: Request, _res: Response, next: NextFunction) => {

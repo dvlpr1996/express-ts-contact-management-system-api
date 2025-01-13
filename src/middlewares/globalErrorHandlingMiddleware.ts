@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { CustomError } from '../libs/types/types';
+import 'dotenv/config';
 
 const globalErrorHandlingMiddleware = (err: CustomError, _req: Request, res: Response, _next: NextFunction) => {
   if (process.env.NODE_ENV === 'development') {
