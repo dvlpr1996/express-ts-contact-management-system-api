@@ -6,6 +6,18 @@ import helmet from 'helmet';
 import notFoundErrorHandlingMiddleware from './middlewares/notFoundErrorHandlingMiddleware';
 import globalErrorHandlingMiddleware from './middlewares/globalErrorHandlingMiddleware';
 import checkEnvVarsMiddleware from './middlewares/checkEnvVarsMiddleware';
+import { API_ROUTE_VERSION } from './config/constants';
+import authRoutes from './routes/authRoutes';
+import cookieParser from 'cookie-parser';
+import { COOKIE_PARSER_SECRET_KEY } from './config/constants';
+import ExpressMongoSanitize from 'express-mongo-sanitize';
+import passport from './middlewares/passportMiddleware';
+
+// todo :: order of mw calls and fix other mw options.
+// todo :: add comments.
+// todo :: add cors mw.
+// todo :: add hpp mw.
+// todo :: add xss mw.
 
 const app: Application = express();
 
@@ -16,6 +28,7 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
   if (!req.timedout) next();
 });
 
+app.use(cookieParser(COOKIE_PARSER_SECRET_KEY));
 app.use(compression());
 app.use(helmet());
 
@@ -37,6 +50,11 @@ app.use(
     type: 'application/x-www-form-urlencoded',
   })
 );
+
+app.use(ExpressMongoSanitize({ allowDots: false }));
+
+app.use(passport.initialize());
+app.use(API_ROUTE_VERSION, authRoutes);
 
 app.all('*', (req: Request, _res: Response, _next: NextFunction) => {
   throw new Error(`The Route '${req.originalUrl}' Does Not Exists`);
