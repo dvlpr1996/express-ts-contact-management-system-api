@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import MissingEnvVarsError from '../libs/error/MissingEnvVarsError';
 
 const requiredEnvVars = [
   'DOMAIN',
@@ -19,7 +20,7 @@ const requiredEnvVars = [
 const checkEnvVarsMiddleware = (_req: Request, _res: Response, next: NextFunction) => {
   const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
   if (missingEnvVars.length > 0) {
-    throw new Error(`Missing environment variables: ${missingEnvVars.join(', ')}`);
+    throw new MissingEnvVarsError(missingEnvVars);
   }
 
   next();
