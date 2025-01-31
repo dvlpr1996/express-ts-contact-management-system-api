@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import MissingEnvVarsError from '../errors/MissingEnvVarsError';
+import MissingEnvVarsError from '../errors/missingEnvVarsError';
 
 const requiredEnvVars = [
   'DOMAIN',
@@ -17,11 +17,12 @@ const requiredEnvVars = [
   'PASSPORT_JWT_COOKIE_NAME',
 ];
 
-const checkEnvVarsMiddleware = (_req: Request, _res: Response, _next: NextFunction) => {
+const checkEnvVarsMiddleware = (_req: Request, _res: Response, next: NextFunction) => {
   const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
   if (missingEnvVars.length > 0) {
     throw new MissingEnvVarsError(missingEnvVars);
   }
+  next();
 };
 
 export default checkEnvVarsMiddleware;
