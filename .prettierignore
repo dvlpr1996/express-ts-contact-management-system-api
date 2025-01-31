@@ -1,0 +1,20 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output directories
+build/
+dist/
+old/
+
+# Ignore specific files
+*.min.js
+*.min.css
+
+# Ignore all JSON files in a specific directory
+app/data/*.json
+
+# Ignore specific file by name
+example.txt
+
+# Ignore a nested directory
+public/assets/

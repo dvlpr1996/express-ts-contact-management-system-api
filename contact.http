@@ -1,0 +1,27 @@
+@hostname = localhost
+@port = 8000
+@api_version = v1
+@host = {{hostname}}:{{port}}/api/{{api_version}}
+@contentType = application/json
+
+### login
+POST http://{{host}}/login
+Content-Type: {{contentType}}
+
+{
+  "username": "exampleUser",
+  "password": "examplePassword"
+}
+
+### register
+POST http://{{host}}/register
+Content-Type: {{contentType}}
+
+{
+  "username": "newUser",
+  "password": "newPassword",
+  "email": "user@example.com"
+}
+
+### logout
+GET http://{{host}}/logout
