@@ -1,16 +1,17 @@
+import 'dotenv/config';
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
-import 'dotenv/config';
 import { CustomError } from '../../types/types';
 
 const globalErrorHandler = (err: CustomError, _req: Request, res: Response, _next: NextFunction) => {
   if (process.env.NODE_ENV === 'development') {
-    console.error('Error stack:', err.stack);
+    console.error('Error Details:', { name: err.name, stack: err.stack });
   }
 
   // set default error status and message
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Internal Server Error';
+  let code = err.code || null;
 
   // handling mongoose Error
   if (err instanceof mongoose.Error.ValidationError) {
@@ -27,10 +28,17 @@ const globalErrorHandler = (err: CustomError, _req: Request, res: Response, _nex
     message = 'Duplicate Key Error';
   }
 
+  const errors = err.errors || [];
+
   res.status(statusCode).json({
     success: false,
     message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    errors: Array.isArray(errors) ? errors : [errors],
+    ...(code !== null && { code: err.code }),
+    ...(process.env.NODE_ENV === 'development' && {
+      stack: err.stack,
+      timestamp: new Date().toISOString(),
+    }),
   });
 };
 

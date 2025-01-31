@@ -18,7 +18,7 @@ export default class ApiError extends Error {
     this.isOperational = isOperational;
 
     // Ensure the prototype chain is correctly set
-    Object.setPrototypeOf(this, apiError.prototype);
+    Object.setPrototypeOf(this, ApiError.prototype);
 
     // Capture stack trace in non-production environments
     if (process.env.NODE_ENV !== 'production') {
@@ -35,10 +35,11 @@ export default class ApiError extends Error {
       success: false,
       statusCode: this.statusCode,
       errorCode: this.errorCode,
-      errors: this.errors,
+      errors: Array.isArray(this.errors) ? this.errors : [this.errors],
       message: this.message,
       timestamp: new Date().toISOString(),
       ...(process.env.NODE_ENV !== 'production' && { stack: this.stack }),
+      ...(this.errorCode && { code: this.errorCode }),
     };
   }
 }

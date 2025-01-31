@@ -3,7 +3,8 @@ export interface CustomError extends Error {
   statusCode?: number;
   message: string;
   stack?: string;
-  code?: number | string;
+  errors?: string[]; // For validation errors or custom error details
+  code?: string | number; // Custom error code
   isOperational?: boolean;
-  details?: string | object;
+  details?: string | object; // Optional additional details
 }
