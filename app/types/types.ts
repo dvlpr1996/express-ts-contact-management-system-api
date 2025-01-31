@@ -8,3 +8,8 @@ export interface CustomError extends Error {
   isOperational?: boolean;
   details?: string | object; // Optional additional details
 }
+
+export enum RoleEnum {
+  ADMIN = 'admin',
+  USER = 'user',
+}
