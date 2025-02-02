@@ -39,7 +39,7 @@ app.use(
 
 app.use(ExpressMongoSanitize({ allowDots: false }));
 
-app.get(API_ROUTE_VERSION, (req, res) => {
+app.get(API_ROUTE_VERSION, (_req, res) => {
   res.status(200).json({ message: 'API is working' });
 });
 
