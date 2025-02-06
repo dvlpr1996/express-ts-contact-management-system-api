@@ -4,6 +4,11 @@
 
 The Express TS Contact Management System API is a robust and scalable RESTful API built using Express.js and TypeScript. Designed to efficiently manage contacts, this application utilizes MongoDB as a NoSQL database and Mongoose as an Object Data Modeling (ODM) library. For authentication, Passport.js is employed, providing secure and flexible authentication strategies.
 
+## features
+
+- implement JWT authentication with passport-jwt-cookiecombo (access token with cookie)
+
+
 ## Routes
 
 (Provide details about the API routes here)
