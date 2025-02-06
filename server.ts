@@ -1,21 +1,20 @@
 import 'dotenv/config';
 import app from './app/app';
 import mongoConnection from './app/configs/mongoConnection';
-import { API_ROUTE_VERSION } from './app/constants/constants';
+import { API_BASE_URL } from './app/configs/appConfigs';
 
 const PORT = process.env.APP_PORT || 8000;
-const APP_URL = process.env.APP_URL || 'localhost';
 
 const startServer = async () => {
   try {
-    if (!PORT || !APP_URL) {
+    if (!PORT) {
       throw new Error('APP_PORT or APP_URL env variable is missing');
     }
 
     await mongoConnection();
 
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${APP_URL}:${PORT}${API_ROUTE_VERSION}`);
+      console.log(`Server is running on port ${API_BASE_URL}`);
     });
   } catch (error) {
     console.error('Unable to connect to the database:', error);

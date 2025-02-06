@@ -9,9 +9,11 @@ import notFoundErrorHandler from './http/middlewares/notFoundErrorHandler';
 import globalErrorHandler from './http/middlewares/globalErrorHandler';
 import checkEnvVarsMiddleware from './http/middlewares/checkEnvVarsMiddleware';
 import { API_ROUTE_VERSION, COOKIE_PARSER_SECRET_KEY } from './constants/constants';
-import { baseBodyParserConfigs } from './configs/appConfigs';
+import { baseBodyParserConfigs, corsConfigs } from './configs/appConfigs';
 import ApiError from './http/errors/apiError';
-import testRoutes from './router/test';
+import authRoutes from './router/authRouter';
+import passport from 'passport';
+import cors from 'cors';
 
 const app: Application = express();
 
@@ -22,10 +24,13 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
   if (!req.timedout) next();
 });
 
-app.use(cookieParser(COOKIE_PARSER_SECRET_KEY));
 app.use(compression());
-app.use(helmet());
 
+app.use(cors(corsConfigs));
+app.use(cookieParser(COOKIE_PARSER_SECRET_KEY));
+app.use(passport.initialize());
+
+app.use(helmet());
 app.use(bodyParser.json(baseBodyParserConfigs));
 
 app.use(
@@ -33,7 +38,7 @@ app.use(
     ...baseBodyParserConfigs,
     parameterLimit: 1,
     type: 'application/x-www-form-urlencoded',
-    extended: false
+    extended: false,
   })
 );
 
@@ -43,8 +48,7 @@ app.get(API_ROUTE_VERSION, (_req, res) => {
   res.status(200).json({ message: 'API is working' });
 });
 
-// app.use(passport.initialize());
-app.use(API_ROUTE_VERSION, testRoutes);
+app.use(API_ROUTE_VERSION, authRoutes);
 
 app.all('*', (req: Request, _res: Response, _next: NextFunction) => {
   throw new ApiError(`The Route '${req.originalUrl}' Does Not Exist`, 404, [], 'NOT_FOUND');
