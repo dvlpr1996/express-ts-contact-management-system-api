@@ -5,6 +5,6 @@ const authRoutes: Router = express.Router();
 
 authRoutes.post('/login', authController.login);
 authRoutes.post('/register', authController.register);
-authRoutes.post('/logout', authController.logout);
+authRoutes.get('/logout', authController.logout);
 
 export default authRoutes;
