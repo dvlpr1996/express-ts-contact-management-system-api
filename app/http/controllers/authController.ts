@@ -8,6 +8,8 @@ import { cookieOptions } from '../../configs/appConfigs';
 import { PASSPORT_JWT_SIGNED_COOKIE_NAME } from '../../constants/constants';
 import { UserDocument } from '../../types/modelTypes';
 
+// todo :: import createHttpError from "http-errors";
+
 const authController = {
   login: expressAsyncHandler(async (req: Request, res: Response) => {
     const { email, password }: { email: string; password: string } = req.body;

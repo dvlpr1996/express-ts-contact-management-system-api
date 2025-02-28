@@ -21,7 +21,7 @@ export interface ValidationErrorResult {
 }
 
 export interface CookieOptions {
-  maxAge: number;
+  maxAge?: number;
   httpOnly: boolean;
   secure: boolean;
   signed: boolean;

@@ -11,8 +11,7 @@ import checkEnvVarsMiddleware from './http/middlewares/checkEnvVarsMiddleware';
 import { API_ROUTE_VERSION, COOKIE_PARSER_SECRET_KEY } from './constants/constants';
 import { baseBodyParserConfigs, corsConfigs } from './configs/appConfigs';
 import ApiError from './http/errors/apiError';
-import authRoutes from './router/authRouter';
-import passport from 'passport';
+import authRoutes from './router/authRoutes';
 import cors from 'cors';
 
 const app: Application = express();
@@ -28,7 +27,6 @@ app.use(compression());
 
 app.use(cors(corsConfigs));
 app.use(cookieParser(COOKIE_PARSER_SECRET_KEY));
-app.use(passport.initialize());
 
 app.use(helmet());
 app.use(bodyParser.json(baseBodyParserConfigs));

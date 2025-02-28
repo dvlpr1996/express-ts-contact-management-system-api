@@ -21,7 +21,7 @@ export const corsConfigs = {
 };
 
 export const cookieOptions: CookieOptions = {
-  maxAge: 1 * 60 * 60 * 1000,
+  // maxAge: 1 * 60 * 60 * 1000,
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   signed: true,
