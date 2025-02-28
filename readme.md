@@ -6,8 +6,6 @@ The Express TS Contact Management System API is a robust and scalable RESTful AP
 
 ## features
 
-- implement JWT authentication with passport-jwt-cookiecombo (access token with cookie)
-
 
 ## Routes
 
